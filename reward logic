@@ -1,0 +1,26 @@
+export default function handler(req, res) {
+  const score = Number(req.query.score || 0) + 1;
+
+  let image = "https://i.imgur.com/9YQZQZx.png";
+  let button1 = "Click 🔥";
+  let postUrl = `/api?score=${score}`;
+
+  // WIN CONDITION
+  if (score >= 3) {
+    image = "https://i.imgur.com/8Qf0ZQk.png";
+    button1 = "Claim NFT 🎁";
+    postUrl = "https://zora.co/collect/zora:0x6d4c8b8edda44cc3e6f70d1358bc233e5fbd1780/1?referrer=0xbc2876d3daf733e94890e6f82795716c9146a396";
+  }
+
+  res.setHeader("Content-Type", "text/html");
+  res.send(`
+    <html>
+      <head>
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="${image}" />
+        <meta property="fc:frame:button:1" content="${button1}" />
+        <meta property="fc:frame:post_url" content="${postUrl}" />
+      </head>
+    </html>
+  `);
+}
